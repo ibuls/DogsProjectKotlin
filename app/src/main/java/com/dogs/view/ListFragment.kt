@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 
 import com.dogs.R
+import com.dogs.ignore.TestClass
 import kotlinx.android.synthetic.main.fragment_list.*
 
 /**
@@ -31,6 +32,8 @@ class ListFragment : Fragment() {
 
             // class ListFragmentDirections is automatically generated..
             val actionDetailPage = ListFragmentDirections.actionDetailFragment()
+            actionDetailPage.dogUuid = 12
+            actionDetailPage.test = TestClass()
             Navigation.findNavController(it).navigate(actionDetailPage)
         }
     }

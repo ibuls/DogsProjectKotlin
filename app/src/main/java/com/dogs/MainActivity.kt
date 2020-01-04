@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        navController = Navigation.findNavController(this,R.id.navContainer)
+        navController = Navigation.findNavController( this,R.id.navContainer)
         NavigationUI.setupActionBarWithNavController(this,navController)
 
     }
