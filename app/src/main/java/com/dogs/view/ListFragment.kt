@@ -25,16 +25,4 @@ class ListFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        fabCall.setOnClickListener {
-
-            // class ListFragmentDirections is automatically generated..
-            val actionDetailPage = ListFragmentDirections.actionDetailFragment()
-            actionDetailPage.dogUuid = 12
-            actionDetailPage.test = TestClass()
-            Navigation.findNavController(it).navigate(actionDetailPage)
-        }
-    }
 }
