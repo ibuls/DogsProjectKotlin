@@ -1,5 +1,6 @@
 package com.dogs.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dogs.model.DogBreed
@@ -8,6 +9,9 @@ class ListViewModel: ViewModel() {
     val dogs = MutableLiveData<List<DogBreed>>()
     val dogsLoadError = MutableLiveData<Boolean>()
     val loading = MutableLiveData<Boolean>()
+
+
+
     fun refresh(){
         val obj1 = DogBreed("1","Corgy","20 year","Normal","BreedFor","Normal","")
         val obj2 = DogBreed("2","Lebrador","20 year","Normal","BreedFor","Normal","")
@@ -19,6 +23,8 @@ class ListViewModel: ViewModel() {
         dogs.value = dogList
         dogsLoadError.value = false
         loading.value = false
+        Log.d("TEST","refresh completed!")
+
 
     }
 }
