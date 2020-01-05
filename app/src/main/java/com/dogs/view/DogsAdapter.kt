@@ -3,8 +3,11 @@ package com.dogs.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.dogs.R
+import com.dogs.ignore.TestClass
 import com.dogs.model.DogBreed
 import kotlinx.android.synthetic.main.item_dog.view.*
 
@@ -33,6 +36,20 @@ class DogsAdapter(val listDogs:ArrayList<DogBreed>):RecyclerView.Adapter<DogsAda
         val dog = listDogs.get(position)
         holder.itemView.tvDogName.text = dog.dogBreed
         holder.itemView.tvLifeSpan.text = dog.lifeSpan
+
+        holder.itemView.setOnClickListener {
+            val actionDetailFragment = ListFragmentDirections.actionDetailFragment()
+           dog.breedId?.let {
+               actionDetailFragment.dogUuid = dog.breedId.toInt()
+               actionDetailFragment.test = TestClass()
+               actionDetailFragment.dogBreed = dog.dogBreed?:"default"
+               actionDetailFragment.lifeSpan = dog.lifeSpan?:"default"
+               actionDetailFragment.temperment = dog.temprament?:"defualt"
+               actionDetailFragment.imageUrl = "default"
+           }
+            Navigation.findNavController(it).navigate(actionDetailFragment)
+        }
+
     }
 
     class DogsViewHolder(view: View):RecyclerView.ViewHolder(view);

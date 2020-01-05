@@ -7,6 +7,6 @@ data class DogBreed(
     val lifeSpan:String?,
     val breedGroup:String?,
     val breedFor:String?,
-    val temperment:String?,
+    val temprament:String?,
     val imageUrl:String?
 )

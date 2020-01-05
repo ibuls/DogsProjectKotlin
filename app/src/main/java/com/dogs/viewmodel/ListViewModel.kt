@@ -24,7 +24,5 @@ class ListViewModel: ViewModel() {
         dogsLoadError.value = false
         loading.value = false
         Log.d("TEST","refresh completed!")
-
-
     }
 }

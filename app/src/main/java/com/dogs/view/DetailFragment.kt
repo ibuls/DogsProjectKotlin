@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.dogs.R
+import kotlinx.android.synthetic.main.fragment_detail.*
 
 /**
  * A simple [Fragment] subclass.
@@ -35,9 +36,18 @@ class DetailFragment : Fragment() {
             // here it is basically whetever was before ? i.e arguments in our case
             //DetailFragmentArgs class is automatically generated....
             val dogUuid = DetailFragmentArgs.fromBundle(it).dogUuid
-            val testObj = DetailFragmentArgs.fromBundle(it).test
+            val test = DetailFragmentArgs.fromBundle(it).test
+            val dogBreed = DetailFragmentArgs.fromBundle(it).dogBreed
+            val lifeSpan = DetailFragmentArgs.fromBundle(it).lifeSpan
+            val temperment = DetailFragmentArgs.fromBundle(it).temperment
+            val imageUrl = DetailFragmentArgs.fromBundle(it).imageUrl
 
-            testObj?.testMethod(activity?.applicationContext)
+            test?.testMethod(activity?.applicationContext)
+
+            tvName.text = dogBreed
+            tvLifeSpan.text = lifeSpan
+            tvTemprament.text = temperment
+
         }
     }
 
