@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.dogs.R
 import com.dogs.ignore.TestClass
+import com.dogs.utils.log
+import com.dogs.utils.toast
 import com.dogs.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.fragment_list.*
 import java.util.zip.GZIPOutputStream
@@ -47,10 +50,10 @@ class ListFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = dogsAdapter
         }
-            observeViewModel()
 
         viewModel.refresh()
 
+        observeViewModel()
     }
 
 
@@ -68,11 +71,20 @@ class ListFragment : Fragment() {
 
                 // ?.let means if isError is not null only then
                 isError?.let {
+
+                    context?.log("Progress Observed!")
                     tvError.visibility = if (isError) View.VISIBLE else View.GONE
+
+                    if (isError) {
+                        recyclerView.visibility = View.GONE
+                        progressBar.visibility = View.GONE
+                    }
                 } })
 
             viewModel.loading.observe(this, Observer { isLoding->
                 isLoding?.let {
+
+                    context?.log("Progress Observed!")
                     progressBar.visibility = if (isLoding) View.VISIBLE else View.GONE
 
                     if (isLoding)
