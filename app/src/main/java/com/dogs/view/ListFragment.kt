@@ -52,6 +52,12 @@ class ListFragment : Fragment() {
             adapter = dogsAdapter
         }
 
+        swipeRefreshLayout.setOnRefreshListener {
+
+            swipeRefreshLayout.isRefreshing = false
+            viewModel.refresh()
+        }
+
         viewModel.refresh()
 
         observeViewModel()
