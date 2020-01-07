@@ -2,6 +2,7 @@ package com.dogs.view
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -66,37 +67,34 @@ class ListFragment : Fragment() {
                     dogsAdapter.updateListData(dogs)
 
             }
+        })
 
-            viewModel.dogsLoadError.observe(this, Observer { isError->
 
-                // ?.let means if isError is not null only then
-                isError?.let {
+        viewModel.dogsLoadError.observe(this, Observer { isError->
 
-                    context?.log("Progress Observed!")
-                    tvError.visibility = if (isError) View.VISIBLE else View.GONE
+            // ?.let means if isError is not null only then
+            isError?.let {
+                tvError.visibility = if (isError) View.VISIBLE else View.GONE
 
-                    if (isError) {
-                        recyclerView.visibility = View.GONE
-                        progressBar.visibility = View.GONE
-                    }
-                } })
+                if (isError) {
+                    recyclerView.visibility = View.GONE
+                    progressBar.visibility = View.GONE
+                }
+            } })
 
-            viewModel.loading.observe(this, Observer { isLoding->
-                isLoding?.let {
+        viewModel.loading.observe(this, Observer { isLoding->
+            isLoding?.let {
+                progressBar.visibility = if (isLoding) View.VISIBLE else View.GONE
 
-                    context?.log("Progress Observed!")
-                    progressBar.visibility = if (isLoding) View.VISIBLE else View.GONE
-
-                    if (isLoding)
-                    {
-                        recyclerView.visibility = View.GONE
-                        tvError.visibility = View.GONE
-                    }
+                if (isLoding)
+                {
+                    recyclerView.visibility = View.GONE
+                    tvError.visibility = View.GONE
+                }
 
             } })
 
 
-        })
     }
 
 }

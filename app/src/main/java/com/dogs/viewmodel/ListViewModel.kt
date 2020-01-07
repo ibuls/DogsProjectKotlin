@@ -27,7 +27,7 @@ class ListViewModel: ViewModel() {
     private fun fetchFromRemote()
     {
         loading.value = true
-        dogsLoadError.value = false
+
         disposable.add(dogsService.getDogs()
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
@@ -39,9 +39,11 @@ class ListViewModel: ViewModel() {
                 }
 
                 override fun onError(e: Throwable) {
-                    e.printStackTrace()
+
                     dogsLoadError.value = true
                     loading.value = false
+                    e.printStackTrace()
+
                 }
 
             })
