@@ -51,7 +51,6 @@ class DogsAdapter(val listDogs:ArrayList<DogBreed>):RecyclerView.Adapter<DogsAda
            }
             Navigation.findNavController(it).navigate(actionDetailFragment)
         }
-
     }
 
     class DogsViewHolder(view: View):RecyclerView.ViewHolder(view);
