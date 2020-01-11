@@ -1,6 +1,7 @@
 package com.dogs.viewmodel
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dogs.model.DogBreed
@@ -16,6 +17,10 @@ import kotlinx.coroutines.launch
 class ListViewModel(application: Application): BaseViewModel(application) {
 
     private var prefHelper = SharedPreferencesHelper(getApplication())
+
+    private var refreshTime = 5 * 60 * 1000 * 1000 *1000L // This is 5 min in nano sec (milli micro nano)
+
+
     val dogs = MutableLiveData<List<DogBreed>>()
     val dogsLoadError = MutableLiveData<Boolean>()
     val loading = MutableLiveData<Boolean>()
@@ -26,7 +31,29 @@ class ListViewModel(application: Application): BaseViewModel(application) {
 
 
     fun refresh(){
+        val updateTime:Long? = prefHelper.getUpdateTime()
+
+        if (updateTime!=null && updateTime!=0L && System.nanoTime() - updateTime < refreshTime)
+        {
+            fetchFromDatabase()
+        }else
+        {
+            fetchFromRemote()
+        }
+    }
+
+
+    fun refreshBypassCache(){
         fetchFromRemote()
+    }
+
+    private fun fetchFromDatabase() {
+        loading.value = true
+        launch {
+            val dogs= DogDatabase(getApplication()).dogDao().getAllDogs()
+            dogsRetrieved(dogs)
+            Toast.makeText(getApplication(),"Data Retrived from Database",Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun fetchFromRemote()
@@ -38,7 +65,10 @@ class ListViewModel(application: Application): BaseViewModel(application) {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object : DisposableSingleObserver<List<DogBreed>>(){
                 override fun onSuccess(listDogs: List<DogBreed>) {
+                    Toast.makeText(getApplication(),"Data Retrived from Endpoint",Toast.LENGTH_SHORT).show()
+
                     storeDogsLocally(listDogs)
+
                 }
 
                 override fun onError(e: Throwable) {

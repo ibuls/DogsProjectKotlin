@@ -55,7 +55,7 @@ class ListFragment : Fragment() {
         swipeRefreshLayout.setOnRefreshListener {
 
             swipeRefreshLayout.isRefreshing = false
-            viewModel.refresh()
+            viewModel.refreshBypassCache()
         }
 
         viewModel.refresh()
