@@ -2,12 +2,18 @@ package com.dogs.view
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 
 import com.dogs.R
+import com.dogs.utils.getProgressDrawable
+import com.dogs.utils.loadImage
+import com.dogs.viewmodel.DetailViewModel
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 /**
@@ -16,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_detail.*
 class DetailFragment : Fragment() {
 
 
-
+    lateinit var viewModel: DetailViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,27 +34,39 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        viewModel = ViewModelProviders.of(this).get(DetailViewModel::class.java)
         // arguments?.let means only execute the following code if arguments are not null
-        val let = arguments?.let {
+        observeViewModel()
+
+        arguments?.let {
 
             // read the arguments which are sent by other fragment
             // here it is basically whetever was before ? i.e arguments in our case
             //DetailFragmentArgs class is automatically generated....
             val dogUuid = DetailFragmentArgs.fromBundle(it).dogUuid
-            val test = DetailFragmentArgs.fromBundle(it).test
-            val dogBreed = DetailFragmentArgs.fromBundle(it).dogBreed
-            val lifeSpan = DetailFragmentArgs.fromBundle(it).lifeSpan
-            val temperment = DetailFragmentArgs.fromBundle(it).temperment
-            val imageUrl = DetailFragmentArgs.fromBundle(it).imageUrl
-
-            test?.testMethod(activity?.applicationContext)
-
-            tvName.text = dogBreed
-            tvLifeSpan.text = lifeSpan
-            tvTemprament.text = temperment
-
+            Log.d("UUID","UUID Fetched: "+dogUuid)
+            viewModel.fetch(dogUuid)
         }
+
+
+    }
+
+    private fun observeViewModel(){
+
+        viewModel.dog.observe(this, Observer {dog ->
+            dog?.let {
+
+            tvName.text = dog.dogBreed
+            tvLifeSpan.text = dog.lifeSpan
+            tvTemprament.text = dog.temprament
+            context?.let {
+                imageView2.loadImage(dog.imageUrl, getProgressDrawable(it))
+            }
+        }
+        })
+
+
+
     }
 
 

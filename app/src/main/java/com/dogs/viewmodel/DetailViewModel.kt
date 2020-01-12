@@ -1,18 +1,23 @@
 package com.dogs.viewmodel
 
-import android.util.Log
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dogs.model.DogBreed
+import com.dogs.model.DogDatabase
+import kotlinx.coroutines.launch
+import java.util.*
 
-class DetailViewModel: ViewModel() {
-    val dogs = MutableLiveData<DogBreed>()
-    val dogsLoadError = MutableLiveData<Boolean>()
-    val loading = MutableLiveData<Boolean>()
+class DetailViewModel(application: Application): BaseViewModel(application) {
+    val dog = MutableLiveData<DogBreed>()
 
 
 
-    fun refresh(){
+    fun fetch(uuid: Int){
+        launch {
+            val dogList = DogDatabase(getApplication()).dogDao().getDog(uuid)
+            dog.value = dogList
+        }
 
     }
 }

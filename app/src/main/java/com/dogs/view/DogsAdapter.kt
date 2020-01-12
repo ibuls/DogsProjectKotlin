@@ -43,11 +43,6 @@ class DogsAdapter(val listDogs:ArrayList<DogBreed>):RecyclerView.Adapter<DogsAda
             val actionDetailFragment = ListFragmentDirections.actionDetailFragment()
            dog.breedId?.let {
                actionDetailFragment.dogUuid = dog.breedId.toInt()
-               actionDetailFragment.test = TestClass()
-               actionDetailFragment.dogBreed = dog.dogBreed?:"default"
-               actionDetailFragment.lifeSpan = dog.lifeSpan?:"default"
-               actionDetailFragment.temperment = dog.temprament?:"defualt"
-               actionDetailFragment.imageUrl = "default"
            }
             Navigation.findNavController(it).navigate(actionDetailFragment)
         }
