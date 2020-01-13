@@ -10,12 +10,27 @@
     <variable
         name="dog"
         type="com.dogs.model.DogBreed" />
+
+    <variable
+        name="listener"
+        type="com.dogs.view.DogClickListener" />
 </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{listener::onDogClicked}"
         android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/dogId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"
+            android:text="@{String.valueOf(dog.uuid)}"
+            />
 
         <ImageView
             android:id="@+id/imageView"

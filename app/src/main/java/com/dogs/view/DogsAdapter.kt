@@ -16,7 +16,7 @@ import com.dogs.utils.loadImage
 import kotlinx.android.synthetic.main.item_dog.view.*
 
 
-class DogsAdapter(val listDogs:ArrayList<DogBreed>):RecyclerView.Adapter<DogsAdapter.DogsViewHolder>(){
+class DogsAdapter(val listDogs:ArrayList<DogBreed>):RecyclerView.Adapter<DogsAdapter.DogsViewHolder>(),DogClickListener{
 
 
 
@@ -38,21 +38,28 @@ class DogsAdapter(val listDogs:ArrayList<DogBreed>):RecyclerView.Adapter<DogsAda
 
     override fun onBindViewHolder(holder: DogsViewHolder, position: Int) {
         holder.view.dog = listDogs[position]
+        holder.view.listener = this
      /*   val dog = listDogs.get(position)
         holder.itemView.tvDogName.text = dog.dogBreed
         holder.itemView.tvLifeSpan.text = dog.lifeSpan
         holder.itemView.imageView.loadImage(dog.imageUrl, getProgressDrawable(context = holder.itemView.context))
         holder.itemView.setOnClickListener {
-            val actionDetailFragment = ListFragmentDirections.actionDetailFragment()
-           dog.breedId?.let {
-               actionDetailFragment.dogUuid = dog.uuid
+
            }
-            Navigation.findNavController(it).navigate(actionDetailFragment)
         }*/
 
 
     }
 
-    class DogsViewHolder(val view: ItemDogBinding):RecyclerView.ViewHolder(view.root);
+    class DogsViewHolder(val view: ItemDogBinding):RecyclerView.ViewHolder(view.root)
+
+    override fun onDogClicked(v: View) {
+        val uuid = v.dogId.text.toString().toInt()
+        val actionDetailFragment = ListFragmentDirections.actionDetailFragment()
+        actionDetailFragment.dogUuid = uuid
+        Navigation.findNavController(v).navigate(actionDetailFragment)
+    }
+
+
 
 }
