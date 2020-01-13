@@ -17,27 +17,24 @@ class DogsApiService {
     companion object{
         @Volatile private var api:DogsApi? = null
 
+        val BASE_URL = "https://raw.githubusercontent.com/";
+        val client: OkHttpClient =
+            OkHttpClient.Builder().addInterceptor(StethoInterceptor()).build()
 
-        private fun getSingletonClient(): DogsApi? {
+        private var lock = Any()
 
-            if (api==null) {
-                val BASE_URL = "https://raw.githubusercontent.com/";
-
-                val client: OkHttpClient =
-                    OkHttpClient.Builder().addInterceptor(StethoInterceptor()).build()
-                api = Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .client(client)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .build()
-                    .create(DogsApi::class.java);
-
+        private fun getSingletonClient():DogsApi= api?: synchronized(lock){
+            Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build()
+                .create(DogsApi::class.java)
+                .also {
+                api = it
             }
-            return api
-
         }
-
 
     }
 }

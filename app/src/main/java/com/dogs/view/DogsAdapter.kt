@@ -42,7 +42,7 @@ class DogsAdapter(val listDogs:ArrayList<DogBreed>):RecyclerView.Adapter<DogsAda
         holder.itemView.setOnClickListener {
             val actionDetailFragment = ListFragmentDirections.actionDetailFragment()
            dog.breedId?.let {
-               actionDetailFragment.dogUuid = dog.breedId.toInt()
+               actionDetailFragment.dogUuid = dog.uuid
            }
             Navigation.findNavController(it).navigate(actionDetailFragment)
         }
