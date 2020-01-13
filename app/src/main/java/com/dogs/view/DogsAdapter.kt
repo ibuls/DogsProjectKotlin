@@ -4,9 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.dogs.R
+import com.dogs.databinding.ItemDogBinding
 import com.dogs.ignore.TestClass
 import com.dogs.model.DogBreed
 import com.dogs.utils.getProgressDrawable
@@ -26,7 +28,7 @@ class DogsAdapter(val listDogs:ArrayList<DogBreed>):RecyclerView.Adapter<DogsAda
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DogsViewHolder {
         val inflator = LayoutInflater.from(parent.context)
-        val view = inflator.inflate(R.layout.item_dog, parent, false)
+        val view = DataBindingUtil.inflate<ItemDogBinding>(inflator,R.layout.item_dog,parent,false)
         return DogsViewHolder(view)
     }
 
@@ -35,7 +37,8 @@ class DogsAdapter(val listDogs:ArrayList<DogBreed>):RecyclerView.Adapter<DogsAda
     }
 
     override fun onBindViewHolder(holder: DogsViewHolder, position: Int) {
-        val dog = listDogs.get(position)
+        holder.view.dog = listDogs[position]
+     /*   val dog = listDogs.get(position)
         holder.itemView.tvDogName.text = dog.dogBreed
         holder.itemView.tvLifeSpan.text = dog.lifeSpan
         holder.itemView.imageView.loadImage(dog.imageUrl, getProgressDrawable(context = holder.itemView.context))
@@ -45,9 +48,11 @@ class DogsAdapter(val listDogs:ArrayList<DogBreed>):RecyclerView.Adapter<DogsAda
                actionDetailFragment.dogUuid = dog.uuid
            }
             Navigation.findNavController(it).navigate(actionDetailFragment)
-        }
+        }*/
+
+
     }
 
-    class DogsViewHolder(view: View):RecyclerView.ViewHolder(view);
+    class DogsViewHolder(val view: ItemDogBinding):RecyclerView.ViewHolder(view.root);
 
 }
