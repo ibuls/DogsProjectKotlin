@@ -39,15 +39,6 @@ class DogsAdapter(val listDogs:ArrayList<DogBreed>):RecyclerView.Adapter<DogsAda
     override fun onBindViewHolder(holder: DogsViewHolder, position: Int) {
         holder.view.dog = listDogs[position]
         holder.view.listener = this
-     /*   val dog = listDogs.get(position)
-        holder.itemView.tvDogName.text = dog.dogBreed
-        holder.itemView.tvLifeSpan.text = dog.lifeSpan
-        holder.itemView.imageView.loadImage(dog.imageUrl, getProgressDrawable(context = holder.itemView.context))
-        holder.itemView.setOnClickListener {
-
-           }
-        }*/
-
 
     }
 
