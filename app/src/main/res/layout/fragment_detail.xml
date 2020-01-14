@@ -10,9 +10,14 @@
             name="dog"
             type="com.dogs.model.DogBreed" />
         
+        <variable
+            name="pelette"
+            type="com.dogs.model.DogPalette" />
+        
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:background="@{pelette.color}"
         android:layout_height="match_parent"
         tools:context=".view.DetailFragment">
 
