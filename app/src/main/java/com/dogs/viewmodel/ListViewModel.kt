@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.dogs.model.DogBreed
 import com.dogs.model.DogDatabase
 import com.dogs.model.DogsApiService
+import com.dogs.utils.NotificationHelper
 import com.dogs.utils.SharedPreferencesHelper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -65,6 +66,8 @@ class ListViewModel(application: Application): BaseViewModel(application) {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object : DisposableSingleObserver<List<DogBreed>>(){
                 override fun onSuccess(listDogs: List<DogBreed>) {
+
+                    NotificationHelper(getApplication()).createNotification()
                     Toast.makeText(getApplication(),"Data Retrived from Endpoint",Toast.LENGTH_SHORT).show()
 
                     storeDogsLocally(listDogs)
