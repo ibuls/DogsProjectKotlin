@@ -13,6 +13,9 @@
             app:destination="@id/detailFragment2"
             app:enterAnim="@anim/nav_default_pop_enter_anim"
             app:exitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_list_to_settings"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment2"
@@ -66,5 +69,13 @@ imageUrl
         <deepLink
             android:id="@+id/deepLink"
             app:uri="https://www.text.com" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.dogs.view.SettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settings_to_list"
+            app:destination="@id/listFragment" />
     </fragment>
 </navigation>

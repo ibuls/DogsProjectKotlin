@@ -1,19 +1,23 @@
 package com.dogs.viewmodel
 
 import android.app.Application
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.Navigation
 import com.dogs.model.DogBreed
 import com.dogs.model.DogDatabase
 import com.dogs.model.DogsApiService
 import com.dogs.utils.NotificationHelper
 import com.dogs.utils.SharedPreferencesHelper
+import com.dogs.view.ListFragmentDirections
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
+import java.lang.NumberFormatException
 
 class ListViewModel(application: Application): BaseViewModel(application) {
 
@@ -32,6 +36,8 @@ class ListViewModel(application: Application): BaseViewModel(application) {
 
 
     fun refresh(){
+
+        checkCacheDuration()
         val updateTime:Long? = prefHelper.getUpdateTime()
 
         if (updateTime!=null && updateTime!=0L && System.nanoTime() - updateTime < refreshTime)
@@ -40,6 +46,16 @@ class ListViewModel(application: Application): BaseViewModel(application) {
         }else
         {
             fetchFromRemote()
+        }
+    }
+
+    private fun checkCacheDuration() {
+        val cachePreference = prefHelper.getCacheDuration()
+        try{
+            val cachePreferenceInt = cachePreference?.toInt() ?: 5* 60
+            refreshTime = cachePreferenceInt.times( 1000 * 1000 *1000L)
+        }catch (e:NumberFormatException){
+            e.printStackTrace()
         }
     }
 
@@ -115,6 +131,12 @@ class ListViewModel(application: Application): BaseViewModel(application) {
         dogsLoadError.value = false
         loading.value = false
         dogs.value = listDogs
+
+    }
+
+    fun onSettingsClicked(view: View){
+        val actionListToSettings = ListFragmentDirections.actionListToSettings()
+        Navigation.findNavController(view).navigate(actionListToSettings)
 
     }
 

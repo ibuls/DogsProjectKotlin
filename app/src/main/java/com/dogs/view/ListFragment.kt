@@ -3,10 +3,8 @@ package com.dogs.view
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -46,6 +44,7 @@ class ListFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
 
+        setHasOptionsMenu(true)
         // for applying multiple properties
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -100,6 +99,24 @@ class ListFragment : Fragment() {
 
             } })
 
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        inflater.inflate(R.menu.list_menu,menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.menu_settings ->{
+                view?.let{
+                    Navigation.findNavController(it).navigate(ListFragmentDirections.actionListToSettings())
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
 
     }
 
