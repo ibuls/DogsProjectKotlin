@@ -58,7 +58,7 @@ class ListViewModel(application: Application): BaseViewModel(application) {
             e.printStackTrace()
         }
     }
-
+    
 
     fun refreshBypassCache(){
         fetchFromRemote()
@@ -76,6 +76,8 @@ class ListViewModel(application: Application): BaseViewModel(application) {
     private fun fetchFromRemote()
     {
         loading.value = true
+
+
 
         disposable.add(dogsService.getDogs()
             .subscribeOn(Schedulers.newThread())

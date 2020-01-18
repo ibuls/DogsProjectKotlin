@@ -12,6 +12,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.dogs.R
 
 
+
+val PERMISSION_SEND_SMS = 1234
+
 fun Context.toast(msg:String)
 {
     Toast.makeText(this,msg,Toast.LENGTH_SHORT).show()
