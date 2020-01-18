@@ -160,6 +160,14 @@ class DetailFragment : Fragment() {
 
             }
             R.id.action_share -> {
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "text/plain"
+                intent.putExtra(Intent.EXTRA_SUBJECT,"check out this dog breed")
+                intent.putExtra(Intent.EXTRA_TEXT,"${currentDog?.dogBreed} bread for ${currentDog?.breedFor}")
+                intent.putExtra(Intent.EXTRA_STREAM,currentDog?.imageUrl)
+
+                //to set a dialog title we use create chooser
+                startActivity(Intent.createChooser(intent,"Share With"))
 
             }
         }
